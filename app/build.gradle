@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+android {
+    namespace 'com.thewind.space'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.thewind.space"
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    viewBinding {
+        enabled = true
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation project(path: ':Basic')
+    implementation project(path: ':SpaceCore')
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.10'
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // https://mvnrepository.com/artifact/com.google.dagger/dagger
+    implementation 'com.google.dagger:dagger:2.44.2'
+
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
+    runtimeOnly 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+
+    // https://mvnrepository.com/artifact/com.tencent/mmkv
+    implementation 'com.tencent:mmkv:1.2.14'
+
+    // https://mvnrepository.com/artifact/androidx.core/core-ktx
+    runtimeOnly 'androidx.core:core-ktx:1.9.0'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation 'commons-io:commons-io:2.11.0'
+
+    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.2'
+
+    // https://mvnrepository.com/artifact/androidx.viewpager2/viewpager2
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+
+    implementation 'com.alibaba:arouter-api:1.5.2'
+    kapt 'com.alibaba:arouter-compiler:1.5.2'
+
+
+
+}
