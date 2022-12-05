@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.thewind.space.main.ui.videofeed.player.ImmersivePlayerView
+    <com.thewind.space.main.ui.videofeed.player.ImmersivePlayer
         android:layout_gravity="center"
         android:id="@+id/ipv_video_container"
         android:layout_width="match_parent"
