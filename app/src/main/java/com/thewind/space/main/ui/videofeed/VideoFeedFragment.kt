@@ -43,9 +43,7 @@ class VideoFeedFragment : Fragment() {
 
     private fun init(view: View) {
         mRecyclerView = view.findViewById(R.id.rv_video_feed)
-        mRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-        }
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
         mRecyclerView.addOnScrollListener(ImmersivePageHelper(mRecyclerView))
         mFeedVideoVM.mVideoFeedList.observe(viewLifecycleOwner) {
             mRecyclerView.adapter = ImmersiveVideoAdapter(it.toMutableList())

@@ -11,6 +11,7 @@ import com.thewind.space.databinding.ActivityMainBinding
 import com.thewind.space.detailpage.videodetailpage.VideoDetailActivity
 import com.thewind.space.main.ui.bottomnav.BottomBarViewModel
 import com.thewind.space.main.ui.bottomnav.BottomNavBarView
+import com.thewind.space.main.ui.music.searchpage.ui.MusicSearchFragment
 import com.thewind.space.main.ui.recommand.RecommendFragment
 import com.thewind.space.main.ui.videofeed.VideoFeedFragment
 
@@ -42,18 +43,26 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
 
     override fun onSelect(index: Int) {
         Log.i(TAG, "index  = $index is selected")
-        if (index == 0) {
-            val recommendFeedFragment = RecommendFragment()
-            supportFragmentManager.beginTransaction().add(R.id.frag_container, recommendFeedFragment).commitNowAllowingStateLoss()
-        } else if (index == 2) {
-            val videoFeed = VideoFeedFragment()
-            //supportFragmentManager.beginTransaction().replace(R.id.frag_container, videoFeed).commitNowAllowingStateLoss()
-            supportFragmentManager.beginTransaction().replace(R.id.frag_container, videoFeed).commitNowAllowingStateLoss()
-        } else if (index == 3) {
-            val intent = Intent(this, VideoDetailActivity::class.java)
-            startActivity(intent)
-        } else if (index == 4) {
-            ARouter.getInstance().build("/video/detail").navigation()
+        when(index) {
+            0 -> {
+                val recommendFeedFragment = RecommendFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.frag_container, recommendFeedFragment).commitNowAllowingStateLoss()
+            }
+            1 -> {
+                val musicSearchFragment = MusicSearchFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.frag_container, musicSearchFragment).commitNowAllowingStateLoss()
+            }
+            2 -> {
+                val videoFeed = VideoFeedFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.frag_container, videoFeed).commitNowAllowingStateLoss()
+            }
+            3 -> {
+                val intent = Intent(this, VideoDetailActivity::class.java)
+                startActivity(intent)
+            }
+            4 -> {
+                ARouter.getInstance().build("/video/detail").navigation()
+            }
         }
     }
 }

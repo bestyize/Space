@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:height="30dp"
+        android:padding="5dp"
+        android:text="我怀念的"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxEms="15"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:id="@+id/tv_music_title"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"/>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="26dp"
+        android:orientation="horizontal"
+        android:id="@+id/ll_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp">
+        <TextView
+            android:background="@drawable/bg_round_music_tags"
+            android:textColor="@color/white"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textSize="8sp"
+            android:text="无损"
+            android:textScaleX="1.12"
+            android:id="@+id/tv_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="SmallSp" />
+        <TextView
+            android:padding="4dp"
+            android:textColor="@color/like_red"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxEms="15"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:text="孙燕姿"
+            android:id="@+id/tv_singers_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText,SmallSp" />
+        <TextView
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxEms="15"
+            android:padding="4dp"
+            android:textSize="10sp"
+            android:text="逆光"
+            android:id="@+id/tv_album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_enter_detail"
+        android:padding="8dp"
+        android:src="@drawable/right_arrow"
+        android:layout_gravity="center|end"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        tools:ignore="ContentDescription" />
+    <View
+        android:layout_marginTop="60dp"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</FrameLayout>

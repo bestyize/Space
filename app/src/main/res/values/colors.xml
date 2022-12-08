@@ -15,4 +15,6 @@
     
     <color name="like_red">#FFEB4134</color>
     <color name="collect_yellow">#FFFDCC04</color>
+    <color name="light_gray">#33888888</color>
+    <color name="medium_gray">#88888888</color>
 </resources>

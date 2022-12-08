@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.doOnPreDraw
+import com.thewind.space.R
 import com.thewind.spacecore.uiutil.ViewUtils
 
 /**
@@ -27,9 +28,9 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
         fun createDefaultBottomNavBar(context: Context, list: List<String>, listener: BottomNavBarViewSelectListener): BottomNavBarView {
             return BottomNavBarView(context).apply {
                 mHeight = ViewUtils.dpToPx(57)
-                mBackgroundColor = 0x80000000.toInt()
-                mSelectTextColor = 0xFFFF0000.toInt()
-                mUnSelectTextColor = 0xFFFFFFFF.toInt()
+                mBackgroundColor = context.getColor(R.color.light_gray)
+                mSelectTextColor = context.getColor(R.color.light_blue_A400)
+                mUnSelectTextColor = context.getColor(R.color.white)
                 mSelectListener = listener
                 addItems(list)
             }
