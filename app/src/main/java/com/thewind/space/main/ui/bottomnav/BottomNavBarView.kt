@@ -2,7 +2,6 @@ package com.thewind.space.main.ui.bottomnav
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
 import android.util.TypedValue
@@ -10,6 +9,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.core.view.doOnPreDraw
 import com.thewind.space.R
 import com.thewind.spacecore.uiutil.ViewUtils
@@ -28,9 +28,9 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
         fun createDefaultBottomNavBar(context: Context, list: List<String>, listener: BottomNavBarViewSelectListener): BottomNavBarView {
             return BottomNavBarView(context).apply {
                 mHeight = ViewUtils.dpToPx(57)
-                mBackgroundColor = context.getColor(R.color.light_gray)
+                mBackgroundColor = context.getColor(R.color.white)
                 mSelectTextColor = context.getColor(R.color.light_blue_A400)
-                mUnSelectTextColor = context.getColor(R.color.white)
+                mUnSelectTextColor = context.getColor(R.color.black)
                 mSelectListener = listener
                 addItems(list)
             }
@@ -76,6 +76,14 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
         }
     }
 
+    fun setColor(@ColorInt bgColor: Int, @ColorInt selectTextColor: Int, @ColorInt unSelectTextColor: Int) {
+        mBackgroundColor = bgColor
+        mSelectTextColor = selectTextColor
+        mUnSelectTextColor = unSelectTextColor
+        refreshTextView()
+        invalidate()
+    }
+
 
     private fun createTextView(index: Int, title: String, w: Int, h: Int): TextView {
         return TextView(context).apply {
@@ -94,6 +102,11 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
     }
 
     private fun onSelect() {
+        refreshTextView()
+        mSelectListener?.onSelect(mSelectedIndex)
+    }
+
+    private fun refreshTextView() {
         var index = 0
         mNavViews.forEach {
             val textColor = if (index == mSelectedIndex) mSelectTextColor else mUnSelectTextColor
@@ -101,7 +114,6 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
             it.typeface = if (index == mSelectedIndex) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             index++
         }
-        mSelectListener?.onSelect(mSelectedIndex)
     }
 
     interface BottomNavBarViewSelectListener {

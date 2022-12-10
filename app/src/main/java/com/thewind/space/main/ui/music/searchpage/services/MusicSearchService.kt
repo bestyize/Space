@@ -3,6 +3,7 @@ package com.thewind.space.main.ui.music.searchpage.services
 import com.thewind.space.main.ui.music.model.MusicInfo
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -12,7 +13,7 @@ import retrofit2.http.Query
  */
 
 interface MusicSearchService {
-    @GET("api/new/search")
+    @POST("api/new/search")
     fun searchMusic(
         @Query("keyword") keyword: String,
         @Query("num") num: Int,

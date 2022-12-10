@@ -67,8 +67,8 @@
 
     <ImageView
         android:id="@+id/iv_enter_detail"
-        android:padding="8dp"
-        android:src="@drawable/right_arrow"
+        android:padding="10dp"
+        android:src="@drawable/right_arrow_24"
         android:layout_gravity="center|end"
         android:layout_width="48dp"
         android:layout_height="48dp"

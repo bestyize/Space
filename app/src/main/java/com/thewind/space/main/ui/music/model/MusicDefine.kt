@@ -20,7 +20,7 @@ enum class MusicQuality(quality: Int) {
     ZQ(5)
 }
 
-enum class SongSrc(src: String) {
+enum class SongSrc(val src: String) {
     QQ("QQ"),
     KW("KW"),
     WY("WY"),

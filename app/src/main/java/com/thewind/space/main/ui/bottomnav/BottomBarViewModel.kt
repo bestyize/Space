@@ -12,6 +12,8 @@ class BottomBarViewModel : ViewModel() {
 
     var tabs  = MutableLiveData<List<String>>()
 
+    var backColor = MutableLiveData<Int>()
+
     fun update() {
         tabs.postValue(BottomBarModel.tabList)
     }
