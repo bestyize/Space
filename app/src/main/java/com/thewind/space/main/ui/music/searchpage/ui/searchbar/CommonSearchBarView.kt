@@ -1,6 +1,8 @@
 package com.thewind.space.main.ui.music.searchpage.ui.searchbar
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -13,6 +15,7 @@ import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import com.thewind.space.R
 import com.thewind.space.databinding.SearchBarLayoutBinding
+import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 
 /**
  * @author: read
@@ -62,6 +65,26 @@ class CommonSearchBarView @JvmOverloads constructor(
             }
             true
         }
+    }
+
+    fun applyColorTheme(bgColor: Int, eleColor: Int) {
+        binding.root.background = GradientDrawable().apply {
+            setColor(bgColor)
+        }
+        binding.etInput.setTextColor(eleColor)
+        binding.etInput.setHintTextColor(eleColor)
+        binding.tvSearch.setTextColor(eleColor)
+        binding.ivBack.drawable.apply {
+            setTint(eleColor)
+        }
+        binding.clSearchTextContainer.background = GradientDrawable().apply {
+            setColor(0x33ffffff)
+            cornerRadius = dpToPx(1000).toFloat()
+        }
+    }
+
+    fun applyHintText(text: String?) {
+        binding.etInput.hint = text?:""
     }
 
     /**

@@ -15,7 +15,7 @@ interface ImmersivePlayerOperationListener {
 
     fun onShareClicked()
 
-    fun onVideoClicked()
+    fun onCoverClicked()
 }
 
 interface ImmersivePlayerStateListener{

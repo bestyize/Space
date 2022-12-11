@@ -49,7 +49,7 @@ class ImmersiveVideoAdapter(private val feedList: MutableList<VideoFeedDetail>):
                     Log.i(TAG, "onShareClicked")
                 }
 
-                override fun onVideoClicked() {
+                override fun onCoverClicked() {
                     Log.i(TAG, "onVideoClicked")
                 }
             }

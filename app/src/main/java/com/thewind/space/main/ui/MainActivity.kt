@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.FrameLayout
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.thewind.basic.base.BaseActivity
 import com.thewind.space.R
@@ -17,9 +18,11 @@ import com.thewind.space.databinding.ActivityMainBinding
 import com.thewind.space.detailpage.videodetailpage.VideoDetailActivity
 import com.thewind.space.main.ui.bottomnav.BottomBarViewModel
 import com.thewind.space.main.ui.bottomnav.BottomNavBarView
+import com.thewind.space.main.ui.define.MainPage
 import com.thewind.space.main.ui.music.searchpage.ui.MusicSearchFragment
 import com.thewind.space.main.ui.recommand.RecommendFragment
 import com.thewind.space.main.ui.videofeed.VideoFeedFragment
+import com.thewind.spacecore.uiutil.ViewUtils
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 
 private const val TAG = "[App]MainActivity"
@@ -27,6 +30,12 @@ private const val TAG = "[App]MainActivity"
 class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavBarView: BottomNavBarView
+
+    private val mPageMap: Map<Int, Fragment> = mapOf(
+        MainPage.RECOMMEND_PAGE.value to RecommendFragment(),
+        MainPage.MUSIC_PAGE.value to MusicSearchFragment(),
+        MainPage.VIDEO_FEED_PAGE.value to VideoFeedFragment(),
+    )
 
 
     private var bottomBarVm: BottomBarViewModel = BottomBarViewModel()
@@ -59,26 +68,30 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
     override fun onSelect(index: Int) {
         Log.i(TAG, "index  = $index is selected")
         when(index) {
-            0 -> {
-                bottomNavBarView.setColor(Color.WHITE, Color.RED, Color.BLACK)
-                val recommendFeedFragment = RecommendFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.frag_container, recommendFeedFragment).commitNowAllowingStateLoss()
+            MainPage.RECOMMEND_PAGE.value -> {
+                mPageMap[index]?.let {
+                    bottomNavBarView.setColor(Color.WHITE, Color.BLUE, Color.BLACK)
+                    supportFragmentManager.beginTransaction().replace(R.id.frag_container, it).commitNowAllowingStateLoss()
+                }
+
             }
-            1 -> {
-                bottomNavBarView.setColor(Color.WHITE, Color.RED, Color.BLACK)
-                val musicSearchFragment = MusicSearchFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.frag_container, musicSearchFragment).commitNowAllowingStateLoss()
+            MainPage.MUSIC_PAGE.value -> {
+                mPageMap[index]?.let {
+                    bottomNavBarView.setColor(Color.WHITE, Color.RED, Color.BLACK)
+                    supportFragmentManager.beginTransaction().replace(R.id.frag_container, it).commitNowAllowingStateLoss()
+                }
             }
-            2 -> {
-                bottomNavBarView.setColor(Color.TRANSPARENT, Color.RED, Color.WHITE)
-                val videoFeed = VideoFeedFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.frag_container, videoFeed).commitNowAllowingStateLoss()
+            MainPage.VIDEO_FEED_PAGE.value -> {
+                mPageMap[index]?.let {
+                    bottomNavBarView.setColor(Color.TRANSPARENT, Color.RED, Color.WHITE)
+                    supportFragmentManager.beginTransaction().replace(R.id.frag_container, it).commitNowAllowingStateLoss()
+                }
             }
-            3 -> {
+            MainPage.TALK_PAGE.value -> {
                 val intent = Intent(this, VideoDetailActivity::class.java)
                 startActivity(intent)
             }
-            4 -> {
+            MainPage.USER_CENTER_PAGE.value -> {
                 ARouter.getInstance().build("/video/detail").navigation()
             }
         }

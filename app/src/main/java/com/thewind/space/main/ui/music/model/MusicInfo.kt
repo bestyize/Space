@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * @description:
  */
 @Keep
-class MusicInfo {
+class MusicInfo: java.io.Serializable {
     var songSrc: String? = null
     var songId: String? = null
     var songName: String? = null

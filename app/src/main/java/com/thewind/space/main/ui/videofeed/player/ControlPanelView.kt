@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.doOnPreDraw
 import com.bumptech.glide.Glide
 import com.thewind.space.R
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
@@ -20,7 +22,7 @@ import com.thewind.spacecore.widget.list.imagebutton.ImageButtonListView
  * @date: 2022/12/4 上午5:03
  * @description:
  */
-class ControlPanelView(context: Context, attr: AttributeSet?) : FrameLayout(context, attr) {
+class ControlPanelView(context: Context, attr: AttributeSet? = null) : FrameLayout(context, attr) {
 
     private val controlPanelViewModel = ControlPanelViewModel()
 
@@ -44,7 +46,20 @@ class ControlPanelView(context: Context, attr: AttributeSet?) : FrameLayout(cont
                 bottomMargin = dpToPx(80)
             }
         }
+
         addView(itemView)
+
+        doOnPreDraw {
+            val responseArea = FrameLayout(context).apply {
+                layoutParams = LayoutParams((0.7 * width).toInt(), (0.7 * width).toInt()).apply {
+                    gravity = Gravity.CENTER
+                }
+                setOnClickListener {
+                    listener?.onCoverClicked()
+                }
+            }
+            addView(responseArea)
+        }
 
     }
 

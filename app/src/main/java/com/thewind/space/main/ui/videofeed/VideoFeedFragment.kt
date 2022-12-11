@@ -24,6 +24,11 @@ class VideoFeedFragment : Fragment() {
     private val mFeedVideoVM = ImmersiveVideoViewModel()
     private lateinit var mRecyclerView: RecyclerView
 
+    override fun onResume() {
+        super.onResume()
+        ViewUtils.enterImmersiveFullScreenMode(activity)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +41,6 @@ class VideoFeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ViewUtils.enterFullScreenMode(activity)
         mFeedVideoVM.update()
 
     }
@@ -48,6 +52,11 @@ class VideoFeedFragment : Fragment() {
         mFeedVideoVM.mVideoFeedList.observe(viewLifecycleOwner) {
             mRecyclerView.adapter = ImmersiveVideoAdapter(it.toMutableList())
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        ViewUtils.exitFullScreenMode(activity, true)
     }
 
 

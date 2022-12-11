@@ -1,21 +1,20 @@
 package com.thewind.space.main.ui.music.searchpage.ui
 
+import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thewind.space.databinding.FragmentMusicSearchBinding
+import com.thewind.space.main.ui.music.detailpage.ui.MusicPlayActivity
 import com.thewind.space.main.ui.music.model.MusicInfo
-import com.thewind.space.main.ui.music.searchpage.ui.searchbar.CommonSearchBarView
 import com.thewind.space.main.ui.music.searchpage.ui.searchbar.SearchBarViewListener
 import com.thewind.space.main.ui.music.searchpage.vm.SearchPageViewModel
 import com.thewind.space.main.ui.music.ui.CommonMusicAdapter
+import com.thewind.spacecore.uiutil.ViewUtils
 
 
 private const val TAG = "[App]MusicSearchFragment"
@@ -27,9 +26,6 @@ class MusicSearchFragment : Fragment() {
     private var searchVM: SearchPageViewModel = SearchPageViewModel()
     private var musicInfoList: MutableList<MusicInfo> = mutableListOf()
 
-    private lateinit var mSearchBar: CommonSearchBarView
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +36,24 @@ class MusicSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.csvSearch.applyColorTheme(Color.RED, Color.WHITE)
         binding.rvSearchResult.layoutManager = LinearLayoutManager(context)
-        binding.rvSearchResult.adapter = CommonMusicAdapter(musicInfoList)
+        binding.rvSearchResult.adapter = CommonMusicAdapter(musicInfoList).apply {
+            selectListener = object : CommonMusicAdapter.OnItemSelectListener {
+                override fun onClicked(musicInfo: MusicInfo) {
+                    val intent = Intent(context, MusicPlayActivity::class.java)
+                    intent.putExtra("music_info", musicInfo)
+                    startActivity(intent)
+                }
+
+            }
+        }
         searchVM.musicInfoListLiveData.observe(viewLifecycleOwner) {
             musicInfoList.clear()
             musicInfoList.addAll(it)
             binding.rvSearchResult.adapter?.notifyDataSetChanged()
         }
-        mSearchBar = CommonSearchBarView(requireContext()).apply {
-            layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
-        binding.root.addView(mSearchBar)
-        mSearchBar.searchListener = object : SearchBarViewListener {
+        binding.csvSearch.searchListener = object : SearchBarViewListener {
             override fun onSearchClick(text: String) {
                 searchVM.search(text)
             }
@@ -70,6 +72,11 @@ class MusicSearchFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ViewUtils.enterFullScreenMode(activity, false)
     }
 
 
