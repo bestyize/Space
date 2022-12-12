@@ -19,6 +19,7 @@ import com.thewind.space.detailpage.videodetailpage.VideoDetailActivity
 import com.thewind.space.main.ui.bottomnav.BottomBarViewModel
 import com.thewind.space.main.ui.bottomnav.BottomNavBarView
 import com.thewind.space.main.ui.define.MainPage
+import com.thewind.space.main.ui.music.detailpage.ui.player.floatplayer.FloatPlayerManager
 import com.thewind.space.main.ui.music.searchpage.ui.MusicSearchFragment
 import com.thewind.space.main.ui.recommand.RecommendFragment
 import com.thewind.space.main.ui.videofeed.VideoFeedFragment
@@ -45,6 +46,11 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomBar()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        FloatPlayerManager.getInstance().addPlayerView(this, binding.root)
     }
 
     private fun initBottomBar() {

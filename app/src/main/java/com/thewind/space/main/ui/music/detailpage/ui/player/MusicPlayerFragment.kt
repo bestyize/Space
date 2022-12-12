@@ -3,7 +3,6 @@ package com.thewind.space.main.ui.music.detailpage.ui.player
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,17 +12,16 @@ import android.view.ViewGroup.LayoutParams
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.SeekBar
-import androidx.core.view.marginLeft
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.thewind.space.R
 import com.thewind.space.databinding.FragmentMusicPlayerBinding
 import com.thewind.space.main.ui.music.detailpage.ui.lyric.LyricView
 import com.thewind.space.main.ui.music.model.MusicInfo
+import com.thewind.space.main.ui.music.model.MusicPlayInfo
 import com.thewind.space.main.ui.music.model.getSingerDisplayName
 import com.thewind.space.main.ui.videofeed.player.ControlPanelView
 import com.thewind.space.main.ui.videofeed.player.ImmersivePlayerOperationListener
@@ -32,7 +30,6 @@ import com.thewind.spacecore.uiutil.FastBlurUtil
 import com.thewind.spacecore.uiutil.ViewUtils
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 import kotlinx.coroutines.*
-import kotlin.concurrent.timer
 
 
 /**
@@ -41,6 +38,7 @@ import kotlin.concurrent.timer
  * create an instance of this fragment.
  */
 private const val TAG = "[App]MusicPlayerFragment"
+
 class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
     // TODO: Rename and change types of parameters
     var musicInfo: MusicInfo? = null
@@ -64,9 +62,10 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
         super.onViewCreated(view, savedInstanceState)
         binding.tvMusicTitle.text = musicInfo?.songName
         binding.tvSingersName.text = musicInfo?.getSingerDisplayName()
-
+        MusicPlayerManager.getInstance().setMusicInfo(musicInfo)
         musicPlayerViewModel.playInfo.observe(viewLifecycleOwner) { musicPlayInfo ->
-            MainScope().launch {
+            MusicPlayerManager.getInstance().setPlayerData(musicPlayInfo)
+            lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     getPlayer()?.let { player ->
                         mPlayState = MusicPlayState.INIT
@@ -110,7 +109,8 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
                 }
             })
         binding.root.addView(ControlPanelView(requireContext()).apply {
-            layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+            layoutParams =
+                LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             listener = this@MusicPlayerFragment
 
         })
@@ -118,7 +118,7 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
             width = (ViewUtils.getScreenWidth() * 0.8).toInt()
             height = (ViewUtils.getScreenWidth() * 0.6).toInt()
         }
-        binding.acsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        binding.acsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
             }
@@ -135,10 +135,11 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
             }
         })
         mLyricView = LyricView(requireContext()).apply {
-            layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, dpToPx(200)).apply {
-                leftMargin = dpToPx(60)
-                rightMargin = dpToPx(60)
-            }
+            layoutParams =
+                FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, dpToPx(200)).apply {
+                    leftMargin = dpToPx(60)
+                    rightMargin = dpToPx(60)
+                }
             y = ViewUtils.getScreenHeight() * 0.65f
         }
         binding.root.addView(mLyricView)
@@ -171,7 +172,6 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        MusicPlayerManager.getInstance().release()
         mPlayState = MusicPlayState.STOP
     }
 

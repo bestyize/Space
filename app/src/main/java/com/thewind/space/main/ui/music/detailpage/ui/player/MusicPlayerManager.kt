@@ -1,6 +1,8 @@
 package com.thewind.space.main.ui.music.detailpage.ui.player
 
 import android.media.MediaPlayer
+import com.thewind.space.main.ui.music.model.MusicInfo
+import com.thewind.space.main.ui.music.model.MusicPlayInfo
 
 /**
  * @author: read
@@ -9,9 +11,10 @@ import android.media.MediaPlayer
  */
 class MusicPlayerManager {
 
-    companion object {
-        fun getInstance() = Inner.INSTANCE
-    }
+    private var mMusicPlayInfo: MusicPlayInfo? = null
+    private var mMusicInfo: MusicInfo ?= null
+
+
 
     private var mediaPlayer: MediaPlayer? = MediaPlayer()
 
@@ -26,8 +29,28 @@ class MusicPlayerManager {
         mediaPlayer = MediaPlayer()
     }
 
+    fun setPlayerData(musicPlayInfo: MusicPlayInfo?) {
+        mMusicPlayInfo = musicPlayInfo
+    }
+
+    fun setMusicInfo(musicInfo: MusicInfo?) {
+        mMusicInfo = musicInfo
+    }
+
+    fun getPlayerData(): MusicPlayInfo? {
+        return mMusicPlayInfo
+    }
+
+    fun getMusicInfo(): MusicInfo? {
+        return mMusicInfo
+    }
+
     private object Inner {
         val INSTANCE = MusicPlayerManager()
+    }
+
+    companion object {
+        fun getInstance() = Inner.INSTANCE
     }
 
 }

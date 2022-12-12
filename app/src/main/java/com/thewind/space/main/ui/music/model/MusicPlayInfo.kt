@@ -5,7 +5,7 @@ package com.thewind.space.main.ui.music.model
  * @date: 2022/12/11 下午9:21
  * @description:
  */
-class MusicPlayInfo {
+class MusicPlayInfo: java.io.Serializable {
     val title: String? = null
     val author: String? = null
     val pic: String? = null
