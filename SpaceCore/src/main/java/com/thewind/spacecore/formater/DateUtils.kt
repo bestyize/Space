@@ -30,7 +30,9 @@ object DateUtils {
         var pos = 0
         var res = 0
         while (pos < this.length ) {
-            res = res * 10 + (this[pos++] - '0')
+            val c = this[pos++]
+            if (c !in '0'..'9') return 0
+            res = res * 10 + (c - '0')
         }
         return res
     }

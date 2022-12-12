@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.ScrollView
+import androidx.core.view.get
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.MainScope
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "[App]LyricView"
 
-class LyricView(context: Context, attr: AttributeSet ?= null) : ScrollView(context, attr) {
+class LyricView(context: Context, attr: AttributeSet ?= null) : NestedScrollView(context, attr) {
 
     private var mRvLyric: RecyclerView
     private var mAdapter: LyricAdapter
@@ -52,10 +54,12 @@ class LyricView(context: Context, attr: AttributeSet ?= null) : ScrollView(conte
         var index = 0
         mLyricList.forEach {
             if (timeSec <= it.timeSecond) {
-                val offset =  (measuredHeight * index.toFloat() / mLyricList.size).toInt()
-                Log.i(TAG, "update, index= $index, offset = $offset, height = $measuredHeight")
-                //smoothScrollTo(0, index * 20)
-                scrollTo(0, index * 40)
+                val midIndex: Int = when {
+                    index < 2 -> 0
+                    else -> {index - 2}
+                }
+                //val scrollTime: Int = if(index >= mLyricList.size - 1) 3000 else (mLyricList[index + 1].timeSecond - mLyricList[index].timeSecond + 1000)
+                smoothScrollTo(0, mAdapter.getItemHeight() * midIndex, 3600)
                 return
             }
             index++

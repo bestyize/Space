@@ -20,6 +20,6 @@ object LyricUtils {
                 })
             }
         }
-        return list
+        return list.filter { !it.lyric.isNullOrBlank() }
     }
 }

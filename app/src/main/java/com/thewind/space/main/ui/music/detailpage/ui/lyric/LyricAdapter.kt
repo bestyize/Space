@@ -17,14 +17,16 @@ import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
  * @description:
  */
 class LyricAdapter(val list: List<LyricInfo>): RecyclerView.Adapter<LyricViewHolder>() {
+
+    private val lyricHeight = dpToPx(40)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LyricViewHolder {
         val view = TextView(parent.context).apply {
-            layoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+            layoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, lyricHeight).apply {
                 gravity = Gravity.CENTER
                 setPadding(dpToPx(5))
             }
             textAlignment = View.TEXT_ALIGNMENT_CENTER
-            setTextSize(18.toFloat())
+            textSize = 18.toFloat()
             setTextColor(Color.WHITE)
         }
         return LyricViewHolder(view)
@@ -37,6 +39,14 @@ class LyricAdapter(val list: List<LyricInfo>): RecyclerView.Adapter<LyricViewHol
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    fun getItemHeight(): Int {
+        return lyricHeight
+    }
+
+    fun getTotalHeight(): Int {
+        return lyricHeight * list.size
     }
 }
 
