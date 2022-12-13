@@ -36,7 +36,7 @@ class MusicSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.csvSearch.applyColorTheme(Color.RED, Color.WHITE)
+        binding.csvSearch.applyColorTheme(Color.BLACK, Color.WHITE)
         binding.rvSearchResult.layoutManager = LinearLayoutManager(context)
         binding.rvSearchResult.adapter = CommonMusicAdapter(musicInfoList).apply {
             selectListener = object : CommonMusicAdapter.OnItemSelectListener {

@@ -45,13 +45,10 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        FloatPlayerManager.getInstance().addPlayerView(this, binding.root)
         initBottomBar()
     }
 
-    override fun onResume() {
-        super.onResume()
-        FloatPlayerManager.getInstance().addPlayerView(this, binding.root)
-    }
 
     private fun initBottomBar() {
         bottomBarVm.tabs.observe(this) {
@@ -83,7 +80,7 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
             }
             MainPage.MUSIC_PAGE.value -> {
                 mPageMap[index]?.let {
-                    bottomNavBarView.setColor(Color.WHITE, Color.RED, Color.BLACK)
+                    bottomNavBarView.setColor(Color.BLACK, Color.WHITE, Color.LTGRAY)
                     supportFragmentManager.beginTransaction().replace(R.id.frag_container, it).commitNowAllowingStateLoss()
                 }
             }

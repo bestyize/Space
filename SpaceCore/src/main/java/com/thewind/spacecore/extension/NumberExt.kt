@@ -1,5 +1,7 @@
 package com.thewind.spacecore.extension
 
+import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
+
 /**
  * @author: read
  * @date: 2022/12/6 上午3:46
@@ -36,4 +38,8 @@ fun Double.atLast(minVal: Double): Boolean {
 
 fun Double.atMost(maxVal: Double): Boolean {
     return this <= maxVal
+}
+
+fun Int.dp(): Float {
+    return dpToPx(this).toFloat()
 }
