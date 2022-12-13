@@ -25,6 +25,7 @@ class MusicPlayActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MusicPlayerManager.getInstance().release()
         binding = ActivityMusicPlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewUtils.enterFullScreenMode(this, false)

@@ -32,7 +32,6 @@ class FloatPlayerManager {
             }
             fListener = object : FloatPlayerListener {
                 override fun onClick() {
-                    MusicPlayerManager.getInstance().release()
                     val intent = Intent(activity, MusicPlayActivity::class.java)
                     intent.putExtra("music_info", MusicPlayerManager.getInstance().getMusicInfo())
                     intent.putExtra(

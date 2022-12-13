@@ -24,9 +24,9 @@ class MusicPlayerManager {
 
     fun release(){
         mediaPlayer?.reset()
-        mediaPlayer?.release()
-        mediaPlayer =null
-        mediaPlayer = MediaPlayer()
+//        mediaPlayer?.release()
+//        mediaPlayer =null
+//        mediaPlayer = MediaPlayer()
     }
 
     fun setPlayerData(musicPlayInfo: MusicPlayInfo?) {
