@@ -1,10 +1,10 @@
 package com.thewind.space.main.ui.music.searchpage.vm
 
+import androidx.lifecycle.viewModelScope
 import com.thewind.space.main.ui.music.model.SongSrc
 import com.thewind.space.main.ui.music.searchpage.services.searchMusic
 import com.thewind.space.main.ui.music.ui.CommonMusicViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,9 +16,19 @@ import kotlinx.coroutines.withContext
 class SearchPageViewModel : CommonMusicViewModel() {
 
     fun search(keyword: String, num: Int = 30, page: Int = 1, src: SongSrc = SongSrc.MG) {
-        MainScope().launch {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 searchMusic(keyword, num, src)
+            }.let {
+                musicInfoListLiveData.postValue(it.toMutableList())
+            }
+        }
+    }
+
+    fun updateRecommendMusic() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                searchMusic("热歌", 100, SongSrc.QQ)
             }.let {
                 musicInfoListLiveData.postValue(it.toMutableList())
             }

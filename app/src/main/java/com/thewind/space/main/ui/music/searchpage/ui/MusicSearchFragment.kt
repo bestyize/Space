@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thewind.space.databinding.FragmentMusicSearchBinding
 import com.thewind.space.main.ui.music.detailpage.ui.MusicPlayActivity
@@ -23,7 +24,7 @@ class MusicSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentMusicSearchBinding
 
-    private var searchVM: SearchPageViewModel = SearchPageViewModel()
+    private lateinit var searchVM: SearchPageViewModel
     private var musicInfoList: MutableList<MusicInfo> = mutableListOf()
 
     override fun onCreateView(
@@ -31,6 +32,7 @@ class MusicSearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMusicSearchBinding.inflate(inflater)
+        searchVM = ViewModelProvider(this)[SearchPageViewModel::class.java]
         return binding.root
     }
 
@@ -70,6 +72,7 @@ class MusicSearchFragment : Fragment() {
 
             }
         }
+        searchVM.updateRecommendMusic()
 
 
     }
