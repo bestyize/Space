@@ -1,8 +1,10 @@
 package com.thewind.spacecore.animator
 
+import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.view.View
+import android.view.View.OnAttachStateChangeListener
 import android.view.animation.LinearInterpolator
 
 /**
@@ -12,14 +14,24 @@ import android.view.animation.LinearInterpolator
  */
 object AnimatorUtils {
 
-    fun startRotate(view: View) {
-        ObjectAnimator.ofFloat(view, "rotation", 0f, 360f).apply {
+    fun startRotate(view: View, time: Long = 6000): Animator {
+        val ani = ObjectAnimator.ofFloat(view, "rotation", 0f, 360f).apply {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.RESTART
             interpolator = LinearInterpolator()
-            duration = 6000
-            start()
+            duration = time
         }
+        view.addOnAttachStateChangeListener(object : OnAttachStateChangeListener{
+            override fun onViewAttachedToWindow(v: View?) {
+                ani.start()
+            }
+
+            override fun onViewDetachedFromWindow(v: View?) {
+                ani.cancel()
+            }
+        })
+        return ani
+
     }
 
 }

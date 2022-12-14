@@ -40,7 +40,7 @@ class FloatPlayerManager {
             playInfo = musicPlayInfo
             layoutParams = FrameLayout.LayoutParams((ViewUtils.getScreenWidth() * 0.7).toInt() , dpToPx(60)).apply {
                 gravity = Gravity.BOTTOM or Gravity.CENTER
-                bottomMargin = dpToPx(60)
+                bottomMargin = 100.dp().toInt()
             }
             setCardBackgroundColor(context.resources.getColor(R.color.background_gray))
             cardElevation = 5.dp()

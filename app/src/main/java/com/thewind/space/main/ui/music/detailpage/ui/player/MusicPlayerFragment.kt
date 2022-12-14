@@ -1,5 +1,6 @@
 package com.thewind.space.main.ui.music.detailpage.ui.player
 
+import android.animation.Animator
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -25,6 +26,7 @@ import com.thewind.space.main.ui.music.model.MusicPlayInfo
 import com.thewind.space.main.ui.music.model.getSingerDisplayName
 import com.thewind.space.main.ui.videofeed.player.ControlPanelView
 import com.thewind.space.main.ui.videofeed.player.ImmersivePlayerOperationListener
+import com.thewind.spacecore.animator.AnimatorUtils
 import com.thewind.spacecore.formater.DateUtils
 import com.thewind.spacecore.uiutil.FastBlurUtil
 import com.thewind.spacecore.uiutil.ViewUtils
@@ -49,6 +51,8 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
     private var mPlayState = MusicPlayState.STOP
 
     private lateinit var mLyricView: LyricView
+
+    private var mCoverAnimator: Animator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,7 +94,12 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
         Glide.with(this)
             .load(musicInfo?.coverUrl)
             .placeholder(R.drawable.ic_like)
+            .circleCrop()
             .into(binding.ivPlayerCover)
+        mCoverAnimator = AnimatorUtils.startRotate(binding.cvCenterCover, 8000)
+        binding.cvCenterCover.setOnClickListener {
+            onCoverClicked()
+        }
         Glide.with(this)
             .asBitmap()
             .load(musicInfo?.coverUrl)
@@ -115,7 +124,7 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
 
         })
         binding.cvCenterCover.layoutParams = binding.cvCenterCover.layoutParams.apply {
-            width = (ViewUtils.getScreenWidth() * 0.8).toInt()
+            width = (ViewUtils.getScreenWidth() * 0.6).toInt()
             height = (ViewUtils.getScreenWidth() * 0.6).toInt()
         }
         binding.acsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -205,9 +214,11 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
         if (getPlayer()?.isPlaying == true) {
             getPlayer()?.pause()
             mPlayState = MusicPlayState.PAUSED
+            mCoverAnimator?.pause()
         } else {
             getPlayer()?.start()
             mPlayState = MusicPlayState.PLAYING
+            mCoverAnimator?.resume()
         }
     }
 }
