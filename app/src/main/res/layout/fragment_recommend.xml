@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".main.ui.recommand.RecommendFragment">
+    tools:context=".main.ui.indexpage.RecommendFragment">
 
     <com.thewind.space.main.ui.music.searchpage.ui.searchbar.CommonSearchBarView
         android:id="@+id/csv_search"

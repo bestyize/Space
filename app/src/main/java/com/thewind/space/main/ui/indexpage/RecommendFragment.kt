@@ -1,4 +1,4 @@
-package com.thewind.space.main.ui.recommand
+package com.thewind.space.main.ui.indexpage
 
 import android.graphics.Color
 import android.os.Bundle

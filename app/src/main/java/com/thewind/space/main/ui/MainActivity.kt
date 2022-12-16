@@ -21,9 +21,8 @@ import com.thewind.space.main.ui.bottomnav.BottomNavBarView
 import com.thewind.space.main.ui.define.MainPage
 import com.thewind.space.main.ui.music.detailpage.ui.player.floatplayer.FloatPlayerManager
 import com.thewind.space.main.ui.music.searchpage.ui.MusicSearchFragment
-import com.thewind.space.main.ui.recommand.RecommendFragment
+import com.thewind.space.main.ui.indexpage.RecommendFragment
 import com.thewind.space.main.ui.videofeed.VideoFeedFragment
-import com.thewind.spacecore.uiutil.ViewUtils
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 
 private const val TAG = "[App]MainActivity"

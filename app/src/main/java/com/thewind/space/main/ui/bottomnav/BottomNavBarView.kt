@@ -2,6 +2,8 @@ package com.thewind.space.main.ui.bottomnav
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.Log
 import android.util.TypedValue
@@ -10,8 +12,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.cardview.widget.CardView
 import androidx.core.view.doOnPreDraw
 import com.thewind.space.R
+import com.thewind.spacecore.extension.dp
 import com.thewind.spacecore.uiutil.ViewUtils
 
 /**
@@ -32,6 +36,8 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
                 mSelectTextColor = context.getColor(R.color.light_blue_A400)
                 mUnSelectTextColor = context.getColor(R.color.black)
                 mSelectListener = listener
+                //mShadowColor = Color.RED
+                mShadowSize = 3.dp().toInt()
                 addItems(list)
             }
         }
@@ -48,6 +54,12 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
     var mSelectTextColor: Int = 0
     var mUnSelectTextColor: Int = 0
     var mSelectListener: BottomNavBarViewSelectListener? = null
+    var mShadowColor: Int = 0x33333333.toInt()
+    var mShadowSize: Int = 0.dp().toInt()
+    private var mShadowPainter: Paint = Paint().apply {
+        style = Paint.Style.FILL
+        color = mShadowColor
+    }
 
     private val mNavItems = mutableListOf<String>()
     private val mNavViews = mutableListOf<TextView>()
@@ -56,6 +68,10 @@ class BottomNavBarView(context: Context): FrameLayout(context) {
 
     override fun dispatchDraw(canvas: Canvas?) {
         canvas?.drawColor(mBackgroundColor)
+        (0..mShadowSize).forEach {
+            mShadowPainter.alpha = it * 16 / mShadowSize
+            canvas?.drawLine(0f, (1 + it).toFloat(), width.toFloat(), (1 + it).toFloat(), mShadowPainter)
+        }
         super.dispatchDraw(canvas)
     }
 
