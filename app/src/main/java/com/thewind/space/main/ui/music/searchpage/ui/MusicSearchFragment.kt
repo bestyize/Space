@@ -1,6 +1,5 @@
 package com.thewind.space.main.ui.music.searchpage.ui
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import com.alibaba.android.arouter.launcher.ARouter
+import com.thewind.space.config.router.AppRouter
 import com.thewind.space.databinding.FragmentMusicSearchBinding
-import com.thewind.space.main.ui.music.detailpage.ui.MusicPlayActivity
 import com.thewind.space.main.ui.music.model.MusicInfo
 import com.thewind.space.main.ui.music.searchpage.ui.searchbar.SearchBarViewListener
 import com.thewind.space.main.ui.music.searchpage.vm.SearchPageViewModel
@@ -45,16 +45,7 @@ class MusicSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.csvSearch.applyColorTheme(Color.BLACK, Color.WHITE)
         binding.rvSearchResult.layoutManager = LinearLayoutManager(context)
-        binding.rvSearchResult.adapter = CommonMusicAdapter(musicInfoList).apply {
-            selectListener = object : CommonMusicAdapter.OnItemSelectListener {
-                override fun onClicked(musicInfo: MusicInfo) {
-                    val intent = Intent(context, MusicPlayActivity::class.java)
-                    intent.putExtra("music_info", musicInfo)
-                    startActivity(intent)
-                }
-
-            }
-        }
+        binding.rvSearchResult.adapter = CommonMusicAdapter(musicInfoList)
         binding.rvSearchResult.addOnScrollListener(object : OnScrollListener() {
             private var lastPos: Int = 0
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

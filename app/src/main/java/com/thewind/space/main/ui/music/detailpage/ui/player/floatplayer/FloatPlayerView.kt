@@ -1,5 +1,6 @@
 package com.thewind.space.main.ui.music.detailpage.ui.player.floatplayer
 
+import android.animation.Animator
 import android.content.Context
 import android.graphics.Color
 import android.text.TextUtils
@@ -31,9 +32,12 @@ class FloatPlayerView(context: Context, attr: AttributeSet? = null) : CardView(c
     private var mMusicTitleView: TextView
     private lateinit var mSingersView: TextView
     private var mPlayerButtonView: ImageView
+    private var mCloseView: ImageView
     var fListener: FloatPlayerListener? = null
 
     var playInfo: MusicPlayInfo? = null
+
+    private var coverAni: Animator? = null
 
     init {
         mCoverView = ImageView(context).apply {
@@ -66,9 +70,18 @@ class FloatPlayerView(context: Context, attr: AttributeSet? = null) : CardView(c
                 marginEnd = dpToPx(16)
             }
         }
+        mCloseView = ImageView(context).apply {
+            layoutParams = LayoutParams(dpToPx(20), dpToPx(20)).apply {
+                gravity = Gravity.END or Gravity.TOP
+            }
+            setOnClickListener {
+                fListener?.onCloseClick()
+            }
+        }
         addView(mCoverView)
         addView(mMusicTitleView)
         addView(mPlayerButtonView)
+        addView(mCloseView)
         mCoverView.setOnClickListener {
             fListener?.onClick()
         }
@@ -128,6 +141,7 @@ class FloatPlayerView(context: Context, attr: AttributeSet? = null) : CardView(c
         super.onAttachedToWindow()
         Glide.with(this).load(playInfo?.pic).centerCrop().placeholder(R.drawable.ic_music)
             .circleCrop().into(mCoverView)
+        Glide.with(this).load(R.drawable.ic_close).circleCrop().into(mCloseView)
         mMusicTitleView.text = playInfo?.title ?: ""
         mSingersView.text = playInfo?.author
         refresh()
@@ -137,10 +151,20 @@ class FloatPlayerView(context: Context, attr: AttributeSet? = null) : CardView(c
         val isPlaying = MusicPlayerManager.getInstance().getPlayer()?.isPlaying == true
         mPlayerButtonView.setImageResource(if (isPlaying) R.drawable.play_to_play else R.drawable.play_to_pause)
         if (isPlaying) {
-            AnimatorUtils.startRotate(mCoverView)
+            if (coverAni != null) {
+                coverAni?.resume()
+            } else {
+                coverAni = AnimatorUtils.startRotate(mCoverView)
+            }
         } else {
-            mCoverView.clearAnimation()
+            coverAni?.pause()
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        coverAni?.cancel()
+        coverAni = null
     }
 
 
@@ -149,4 +173,5 @@ class FloatPlayerView(context: Context, attr: AttributeSet? = null) : CardView(c
 interface FloatPlayerListener {
     fun onClick()
     fun onPlayButtonClick()
+    fun onCloseClick()
 }

@@ -2,7 +2,10 @@ package com.thewind.space.main.ui.indexpage.recommend.services
 
 import android.util.Log
 import com.thewind.space.api.base.RetrofitDefault
+import com.thewind.space.config.router.AppRouter
+import com.thewind.space.main.ui.indexpage.model.CardAction
 import com.thewind.space.main.ui.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.indexpage.model.RecommendCardType
 import com.thewind.space.main.ui.music.model.MusicInfo
 import com.thewind.space.main.ui.music.model.SongSrc
 import com.thewind.space.main.ui.music.model.getSingerDisplayName
@@ -31,9 +34,14 @@ fun getIndexRecommendCardList(page: Int): List<RecommendCard> {
 
     searchMusic("热门", 30, page, SongSrc.QQ).forEach {
         res.add(RecommendCard().apply {
+            cardType = RecommendCardType.MUSIC
             title = it.songName
             subTitle = it.getSingerDisplayName()
             coverUrl = it.coverUrl
+            action = CardAction().apply {
+                actionUrl = AppRouter.PathDefine.MUSIC_PLAYER_PAGE
+                actionData = it
+            }
         })
     }
     return res

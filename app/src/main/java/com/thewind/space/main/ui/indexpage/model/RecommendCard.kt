@@ -13,7 +13,13 @@ class RecommendCard {
     var subTitle: String? = null
     var coverUrl: String? = null
     var cardType: RecommendCardType = RecommendCardType.NONE
-    var url: String? = null
+    var action: CardAction? = null
+}
+
+@Keep
+class CardAction {
+    var actionUrl: String? = null
+    var actionData: Any? = null
 }
 
 @Keep

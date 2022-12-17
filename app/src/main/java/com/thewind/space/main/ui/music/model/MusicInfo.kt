@@ -1,7 +1,11 @@
 package com.thewind.space.main.ui.music.model
 
+import android.content.Context
 import androidx.annotation.Keep
+import com.alibaba.android.arouter.facade.service.SerializationService
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
 
 /**
  * @author: read
@@ -9,7 +13,7 @@ import com.google.gson.annotations.SerializedName
  * @description:
  */
 @Keep
-class MusicInfo: java.io.Serializable {
+class MusicInfo {
     var songSrc: String? = null
     var songId: String? = null
     var songName: String? = null

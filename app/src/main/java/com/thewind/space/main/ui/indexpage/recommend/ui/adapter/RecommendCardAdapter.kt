@@ -4,10 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.thewind.space.R
+import com.thewind.space.config.router.AppRouter
 import com.thewind.space.databinding.RecommendCardItemAdapterBinding
 import com.thewind.space.main.ui.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.indexpage.model.RecommendCardType
 import com.thewind.spacecore.notify.ToastHelper
 
 /**
@@ -32,7 +35,7 @@ class RecommendCardAdapter(val list: List<RecommendCard>) :
         Glide.with(holder.binding.root.context).load(item.coverUrl)
             .placeholder(R.drawable.recommend_place_holder).into(holder.binding.ivCover)
         holder.binding.root.setOnClickListener {
-            ToastHelper.toast("item $position clicked")
+           CardActionHandler.doAction(item)
         }
     }
 

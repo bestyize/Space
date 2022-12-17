@@ -39,9 +39,5 @@ class IndexRecommendFragmentViewModel: ViewModel() {
 
     }
 
-    fun appendRefresh() {
-
-    }
-
 
 }

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.thewind.basic.base.BaseActivity
 import com.thewind.space.R
+import com.thewind.space.config.router.AppRouter
 import com.thewind.space.databinding.ActivityMainBinding
 import com.thewind.space.detailpage.videodetailpage.VideoDetailActivity
 import com.thewind.space.main.ui.bottomnav.BottomBarViewModel
@@ -90,11 +91,12 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
                 }
             }
             MainPage.TALK_PAGE.value -> {
-                val intent = Intent(this, VideoDetailActivity::class.java)
-                startActivity(intent)
+                ARouter.getInstance().build(AppRouter.PathDefine.VIDEO_DETAIL_PAGE).navigation()
+//                val intent = Intent(this, VideoDetailActivity::class.java)
+//                startActivity(intent)
             }
             MainPage.USER_CENTER_PAGE.value -> {
-                ARouter.getInstance().build("/video/detail").navigation()
+                ARouter.getInstance().build(AppRouter.PathDefine.VIDEO_DETAIL_PAGE).navigation()
             }
         }
     }

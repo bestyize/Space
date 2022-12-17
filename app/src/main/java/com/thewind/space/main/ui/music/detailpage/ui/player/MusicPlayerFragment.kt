@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -66,7 +67,7 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
         super.onViewCreated(view, savedInstanceState)
         binding.tvMusicTitle.text = musicInfo?.songName
         binding.tvSingersName.text = musicInfo?.getSingerDisplayName()
-        MusicPlayerManager.getInstance().setMusicInfo(musicInfo)
+
         musicPlayerViewModel.playInfo.observe(viewLifecycleOwner) { musicPlayInfo ->
             MusicPlayerManager.getInstance().setPlayerData(musicPlayInfo)
             lifecycleScope.launch {
@@ -152,6 +153,20 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
             y = ViewUtils.getScreenHeight() * 0.65f
         }
         binding.root.addView(mLyricView)
+        musicInfo?.songId?.let {
+            if (it == MusicPlayerManager.getInstance().getMusicInfo()?.songId) {
+                mPlayState = MusicPlayState.PREPARED
+                binding.acsSeekBar.max = getPlayer()?.duration?:0
+                startCountDown()
+                getPlayer()?.start()
+                mPlayState = MusicPlayState.PLAYING
+                getPlayer()?.setOnCompletionListener {
+                    mPlayState = MusicPlayState.COMPLETED
+                }
+                return
+            }
+        }
+        MusicPlayerManager.getInstance().setMusicInfo(musicInfo)
         musicPlayerViewModel.loadMusic(musicInfo)
 
     }

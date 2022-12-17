@@ -1,11 +1,11 @@
 package com.thewind.space.main.ui.music.ui
 
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.thewind.space.R
+import com.thewind.space.config.router.AppRouter
 import com.thewind.space.databinding.MusicCommonItemLayoutBinding
 import com.thewind.space.main.ui.music.model.MusicInfo
 import com.thewind.space.main.ui.music.model.getSingerDisplayName
@@ -15,12 +15,12 @@ import com.thewind.space.main.ui.music.model.getSingerDisplayName
  * @date: 2022/12/9 上午1:09
  * @description:
  */
-class CommonMusicAdapter(val musicList: MutableList<MusicInfo>): RecyclerView.Adapter<MusicViewHolder>() {
-
-    var selectListener: OnItemSelectListener? = null
+class CommonMusicAdapter(val musicList: MutableList<MusicInfo>) :
+    RecyclerView.Adapter<MusicViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.music_common_item_layout, null, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.music_common_item_layout, parent, false)
         val bind = MusicCommonItemLayoutBinding.bind(view)
         return MusicViewHolder(bind)
     }
@@ -32,18 +32,15 @@ class CommonMusicAdapter(val musicList: MutableList<MusicInfo>): RecyclerView.Ad
         holder.binding.tvAlbumName.text = musicInfo.albumName
         holder.binding.tvSingersName.text = musicInfo.getSingerDisplayName()
         holder.binding.flMusicItem.setOnClickListener {
-            selectListener?.onClicked(musicInfo)
+            ARouter.getInstance().build(AppRouter.PathDefine.MUSIC_PLAYER_PAGE)
+                .withObject(AppRouter.MusicPlayerDefine.MUSIC_INFO, musicInfo).navigation()
         }
     }
 
     override fun getItemCount(): Int {
         return musicList.size
     }
-
-    interface OnItemSelectListener{
-        fun onClicked(musicInfo: MusicInfo)
-    }
 }
 
-class MusicViewHolder(val binding: MusicCommonItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-}
+class MusicViewHolder(val binding: MusicCommonItemLayoutBinding) :
+    RecyclerView.ViewHolder(binding.root)
