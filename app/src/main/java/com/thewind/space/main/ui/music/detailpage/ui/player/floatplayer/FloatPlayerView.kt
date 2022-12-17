@@ -122,10 +122,7 @@ class FloatPlayerView(context: Context, attr: AttributeSet? = null) : CardView(c
                     val t = top + dy
                     val b = t + height
 
-                    if (l >= -(0.1 * width)
-                        && (r <= 1.5 * width)
-                        && (t > 60.dp())
-                        && (b <= ViewUtils.getScreenHeight())) {
+                    if (l >= -(0.1 * width) && (r <= 1.5 * width) && (t > 60.dp()) && (b <= ViewUtils.getScreenHeight())) {
                         layout(l, t, r, b)
                     }
                     return true

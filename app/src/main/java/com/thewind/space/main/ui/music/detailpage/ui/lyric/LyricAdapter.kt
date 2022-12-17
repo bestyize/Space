@@ -50,6 +50,4 @@ class LyricAdapter(val list: List<LyricInfo>): RecyclerView.Adapter<LyricViewHol
     }
 }
 
-class LyricViewHolder(val view: TextView): RecyclerView.ViewHolder(view) {
-
-}
+class LyricViewHolder(val view: TextView): RecyclerView.ViewHolder(view)

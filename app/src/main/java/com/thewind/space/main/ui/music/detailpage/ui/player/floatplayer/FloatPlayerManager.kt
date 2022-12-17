@@ -58,34 +58,43 @@ class FloatPlayerManager {
                     Lifecycle.Event.ON_RESUME -> {
                         Log.i(TAG, "addPlayerView, on resume")
                         MusicPlayerManager.getInstance().getPlayerData()?.let {
-                            mFloatPlayerView = generatePlayerView(rootView.context, it, object : FloatPlayerListener {
-                                override fun onClick() {
-                                    ARouter.getInstance().build(AppRouter.PathDefine.MUSIC_PLAYER_PAGE).withObject(
-                                        AppRouter.MusicPlayerDefine.MUSIC_PLAY_INFO,
-                                        MusicPlayerManager.getInstance().getPlayerData()
-                                    ).withObject(
-                                        AppRouter.MusicPlayerDefine.MUSIC_INFO,
-                                        MusicPlayerManager.getInstance().getMusicInfo()
-                                    ).navigation()
+                            mFloatPlayerView = generatePlayerView(
+                                rootView.context,
+                                it,
+                                object : FloatPlayerListener {
+                                    override fun onClick() {
+                                        ARouter.getInstance()
+                                            .build(AppRouter.PathDefine.MUSIC_PLAYER_PAGE)
+                                            .withObject(
+                                                AppRouter.MusicPlayerDefine.MUSIC_PLAY_INFO,
+                                                MusicPlayerManager.getInstance().getPlayerData()
+                                            ).withObject(
+                                            AppRouter.MusicPlayerDefine.MUSIC_INFO,
+                                            MusicPlayerManager.getInstance().getMusicInfo()
+                                        ).navigation()
 
-                                }
-
-                                override fun onPlayButtonClick() {
-                                    if (MusicPlayerManager.getInstance().getPlayer()?.isPlaying == true) {
-                                        MusicPlayerManager.getInstance().getPlayer()?.pause()
-                                    } else {
-                                        MusicPlayerManager.getInstance().getPlayer()?.start()
                                     }
-                                    mFloatPlayerView?.refresh()
-                                }
 
-                                override fun onCloseClick() {
-                                    MusicPlayerManager.getInstance().getPlayer()?.release()
-                                    mFloatPlayerView?.visibility = View.GONE
-                                    (mFloatPlayerView?.parent as? ViewGroup)?.removeView(mFloatPlayerView)
-                                    mFloatPlayerView = null
-                                }
-                            })
+                                    override fun onPlayButtonClick() {
+                                        if (MusicPlayerManager.getInstance()
+                                                .getPlayer()?.isPlaying == true
+                                        ) {
+                                            MusicPlayerManager.getInstance().getPlayer()?.pause()
+                                        } else {
+                                            MusicPlayerManager.getInstance().getPlayer()?.start()
+                                        }
+                                        mFloatPlayerView?.refresh()
+                                    }
+
+                                    override fun onCloseClick() {
+                                        MusicPlayerManager.getInstance().getPlayer()?.release()
+                                        mFloatPlayerView?.visibility = View.GONE
+                                        (mFloatPlayerView?.parent as? ViewGroup)?.removeView(
+                                            mFloatPlayerView
+                                        )
+                                        mFloatPlayerView = null
+                                    }
+                                })
                             rootView.addView(mFloatPlayerView)
                         }
                     }
