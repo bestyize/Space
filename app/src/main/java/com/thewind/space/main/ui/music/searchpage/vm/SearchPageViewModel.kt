@@ -15,12 +15,22 @@ import kotlinx.coroutines.withContext
  */
 class SearchPageViewModel : CommonMusicViewModel() {
 
-    fun search(keyword: String, num: Int = 30, page: Int = 1, src: SongSrc = SongSrc.MG) {
+    var requestCount = 0
+
+    fun search(keyword: String, loadMore: Boolean = false) {
+        val page = requestCount
+        if (loadMore) {
+            requestCount++
+        } else {
+            requestCount = 0
+        }
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                searchMusic(keyword, num, src)
+                searchMusic(keyword, 30, page, SongSrc.MG)
             }.let {
-                musicInfoListLiveData.postValue(it.toMutableList())
+                if (loadMore) musicInfoListLiveDataLoadMore.postValue(it.toMutableList()) else musicInfoListLiveData.postValue(
+                    it.toMutableList()
+                )
             }
         }
     }
@@ -28,7 +38,7 @@ class SearchPageViewModel : CommonMusicViewModel() {
     fun updateRecommendMusic() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                searchMusic("热门", 30, SongSrc.QQ)
+                searchMusic("热门", 30, 0, SongSrc.QQ)
             }.let {
                 musicInfoListLiveData.postValue(it.toMutableList())
             }

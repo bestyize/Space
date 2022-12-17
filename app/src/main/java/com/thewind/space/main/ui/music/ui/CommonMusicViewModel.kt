@@ -11,4 +11,5 @@ import com.thewind.space.main.ui.music.model.MusicInfo
  */
 open class CommonMusicViewModel: ViewModel() {
     val musicInfoListLiveData = MutableLiveData<MutableList<MusicInfo>>()
+    val musicInfoListLiveDataLoadMore = MutableLiveData<MutableList<MusicInfo>>()
 }

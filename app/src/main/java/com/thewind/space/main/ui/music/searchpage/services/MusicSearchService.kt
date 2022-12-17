@@ -17,6 +17,7 @@ interface MusicSearchService {
     fun searchMusic(
         @Query("keyword") keyword: String,
         @Query("num") num: Int,
+        @Query("page") page: Int,
         @Query("src") src: String
     ): Call<List<MusicInfo>?>
 }

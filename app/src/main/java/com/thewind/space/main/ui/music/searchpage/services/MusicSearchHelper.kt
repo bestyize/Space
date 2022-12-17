@@ -13,9 +13,9 @@ import com.thewind.space.main.ui.music.model.SongSrc
 
 private const val TAG = "[App]MusicSearchHelper"
 
-fun searchMusic(keyword: String, num: Int, src: SongSrc): List<MusicInfo> {
+fun searchMusic(keyword: String, num: Int, page: Int, src: SongSrc): List<MusicInfo> {
     try {
-        return RetrofitDefault.create(MusicSearchService::class.java).searchMusic(keyword, num, src.src).execute().body()
+        return RetrofitDefault.create(MusicSearchService::class.java).searchMusic(keyword, num, page,src.src).execute().body()
             ?: emptyList()
     } catch (e: java.lang.Exception) {
         Log.i(TAG, "searchMusic, exception = $e")

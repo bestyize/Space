@@ -25,11 +25,11 @@ interface IndexRecommendServices {
 
 }
 
-fun getIndexRecommendCardList(): List<RecommendCard> {
+fun getIndexRecommendCardList(page: Int): List<RecommendCard> {
 
     val res = mutableListOf<RecommendCard>()
 
-    searchMusic("热门", 60, SongSrc.QQ).forEach {
+    searchMusic("热门", 30, page, SongSrc.QQ).forEach {
         res.add(RecommendCard().apply {
             title = it.songName
             subTitle = it.getSingerDisplayName()

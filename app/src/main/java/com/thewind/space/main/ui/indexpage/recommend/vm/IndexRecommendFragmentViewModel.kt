@@ -18,12 +18,22 @@ class IndexRecommendFragmentViewModel: ViewModel() {
 
     val recommendFeeds = MutableLiveData<List<RecommendCard>>()
 
-    fun refresh() {
+    val recommendFeedsMore = MutableLiveData<List<RecommendCard>>()
+
+    private var refreshCount: Int = 0
+
+    fun refresh(loadMore: Boolean = false) {
+        val page = if (loadMore) refreshCount else 0
+        if (loadMore) {
+            refreshCount++
+        } else {
+            refreshCount = 0
+        }
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                getIndexRecommendCardList()
+                getIndexRecommendCardList(page)
             }.let {
-                recommendFeeds.postValue(it)
+                if (loadMore) recommendFeedsMore.postValue(it) else recommendFeeds.postValue(it)
             }
         }
 

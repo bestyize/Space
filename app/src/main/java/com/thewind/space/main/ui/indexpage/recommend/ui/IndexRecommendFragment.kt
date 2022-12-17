@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.thewind.space.databinding.FragmentIndexRecommendBinding
 import com.thewind.space.main.ui.indexpage.model.RecommendCard
 import com.thewind.space.main.ui.indexpage.recommend.ui.adapter.RecommendCardAdapter
 import com.thewind.space.main.ui.indexpage.recommend.vm.IndexRecommendFragmentViewModel
+import com.thewind.spacecore.notify.ToastHelper
 
 /**
  * A simple [Fragment] subclass.
@@ -49,6 +52,21 @@ class IndexRecommendFragment : Fragment() {
             cardList.addAll(it)
             binding.rvRecommendFeed.adapter?.notifyDataSetChanged()
             binding.srlRefresh.isRefreshing = false
+            if (it.isEmpty()) {
+                ToastHelper.toast("请检查网络是否通畅")
+            } else {
+                ToastHelper.toast("为您更新了${it.size}条内容")
+            }
+        }
+        recommendVM.recommendFeedsMore.observe(viewLifecycleOwner) {
+            cardList.addAll(it)
+            binding.rvRecommendFeed.adapter?.notifyDataSetChanged()
+            binding.srlRefresh.isRefreshing = false
+            if (it.isEmpty()) {
+                ToastHelper.toast("已经滑到底了，没有更多内容")
+            } else {
+                ToastHelper.toast("为您更新了${it.size}条内容")
+            }
         }
         binding.srlRefresh.apply {
             setColorSchemeColors(Color.RED)
@@ -57,6 +75,22 @@ class IndexRecommendFragment : Fragment() {
             binding.srlRefresh.isRefreshing = true
             recommendVM.refresh()
         }
+        binding.rvRecommendFeed.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            private var lastPos: Int = 0
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    if (lastPos == cardList.size - 1) {
+                        recommendVM.refresh(true)
+                    }
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                lastPos = (recyclerView.layoutManager as? LinearLayoutManager)?.findLastCompletelyVisibleItemPosition()?:0
+            }
+        })
         recommendVM.refresh()
 
     }
