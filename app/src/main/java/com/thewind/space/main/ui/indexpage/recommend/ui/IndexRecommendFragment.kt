@@ -1,5 +1,6 @@
 package com.thewind.space.main.ui.indexpage.recommend.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,15 +42,23 @@ class IndexRecommendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvRecommendFeed.layoutManager = GridLayoutManager(context, 2).apply {
-
-        }
+        binding.rvRecommendFeed.layoutManager = GridLayoutManager(context, 2)
         binding.rvRecommendFeed.adapter = RecommendCardAdapter(cardList)
         recommendVM.recommendFeeds.observe(viewLifecycleOwner) {
+            cardList.clear()
             cardList.addAll(it)
             binding.rvRecommendFeed.adapter?.notifyDataSetChanged()
+            binding.srlRefresh.isRefreshing = false
+        }
+        binding.srlRefresh.apply {
+            setColorSchemeColors(Color.RED)
+        }
+        binding.srlRefresh.setOnRefreshListener {
+            binding.srlRefresh.isRefreshing = true
+            recommendVM.refresh()
         }
         recommendVM.refresh()
+
     }
 
     companion object {
