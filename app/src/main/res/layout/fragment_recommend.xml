@@ -4,18 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".main.ui.indexpage.RecommendFragment">
+    tools:context=".main.ui.indexpage.IndexFragment">
 
     <com.thewind.space.main.ui.music.searchpage.ui.searchbar.CommonSearchBarView
         android:id="@+id/csv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginBottom="60dp"
-        android:id="@+id/rv_recommend_feed"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcv_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent"
+        android:layout_marginBottom="48dp"/>
 
 </LinearLayout>

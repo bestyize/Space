@@ -16,6 +16,7 @@ class RecommendCard {
     var url: String? = null
 }
 
+@Keep
 enum class RecommendCardType(val type: Int) {
     NONE(0),
     MUSIC(1),

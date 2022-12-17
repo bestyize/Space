@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/background_gray"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="5dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:scaleType="centerInside"
+            android:src="@drawable/recommend_place_holder"
+            android:layout_gravity="center"
+            android:id="@+id/iv_cover"
+            android:layout_width="200dp"
+            android:layout_height="200dp"/>
+
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="春风十里"
+            android:textAlignment="center"
+            android:id="@+id/tv_main_title"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
+        <TextView
+            android:text="盐巴乐队"
+            android:textColor="@color/medium_gray"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:id="@+id/tv_sub_title"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

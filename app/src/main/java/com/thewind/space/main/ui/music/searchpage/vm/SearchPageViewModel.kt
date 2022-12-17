@@ -28,7 +28,7 @@ class SearchPageViewModel : CommonMusicViewModel() {
     fun updateRecommendMusic() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                searchMusic("热歌", 100, SongSrc.QQ)
+                searchMusic("热门", 30, SongSrc.QQ)
             }.let {
                 musicInfoListLiveData.postValue(it.toMutableList())
             }

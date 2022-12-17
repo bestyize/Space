@@ -21,7 +21,7 @@ import com.thewind.space.main.ui.bottomnav.BottomNavBarView
 import com.thewind.space.main.ui.define.MainPage
 import com.thewind.space.main.ui.music.detailpage.ui.player.floatplayer.FloatPlayerManager
 import com.thewind.space.main.ui.music.searchpage.ui.MusicSearchFragment
-import com.thewind.space.main.ui.indexpage.RecommendFragment
+import com.thewind.space.main.ui.indexpage.IndexFragment
 import com.thewind.space.main.ui.videofeed.VideoFeedFragment
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 
@@ -32,7 +32,7 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
     private lateinit var bottomNavBarView: BottomNavBarView
 
     private val mPageMap: Map<Int, Fragment> = mapOf(
-        MainPage.RECOMMEND_PAGE.value to RecommendFragment(),
+        MainPage.RECOMMEND_PAGE.value to IndexFragment(),
         MainPage.MUSIC_PAGE.value to MusicSearchFragment(),
         MainPage.VIDEO_FEED_PAGE.value to VideoFeedFragment(),
     )
@@ -72,7 +72,7 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
         when(index) {
             MainPage.RECOMMEND_PAGE.value -> {
                 mPageMap[index]?.let {
-                    bottomNavBarView.setColor(Color.WHITE, Color.BLUE, Color.BLACK)
+                    bottomNavBarView.setColor(Color.WHITE, Color.BLACK, Color.GRAY)
                     supportFragmentManager.beginTransaction().replace(R.id.frag_container, it).commitNowAllowingStateLoss()
                 }
 

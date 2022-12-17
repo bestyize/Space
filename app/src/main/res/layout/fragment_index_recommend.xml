@@ -2,10 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    tools:context=".main.ui.indexpage.recommend.ui.IndexRecommendFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_music_feed"
+        android:id="@+id/rv_recommend_feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
