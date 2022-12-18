@@ -3,18 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".main.ui.indexpage.IndexFragment">
+    tools:context=".main.ui.music.indexpage.IndexFragment">
 
     <com.thewind.space.main.ui.music.searchpage.ui.searchbar.CommonSearchBarView
         android:id="@+id/csv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fcv_container"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_index"
+        app:tabMode="scrollable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="48dp"/>
+        android:layout_height="wrap_content"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp2_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

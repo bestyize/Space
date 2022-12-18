@@ -1,11 +1,11 @@
-package com.thewind.space.main.ui.indexpage.recommend.services
+package com.thewind.space.main.ui.music.indexpage.recommend.services
 
 import android.util.Log
 import com.thewind.space.api.base.RetrofitDefault
 import com.thewind.space.config.router.AppRouter
-import com.thewind.space.main.ui.indexpage.model.CardAction
-import com.thewind.space.main.ui.indexpage.model.RecommendCard
-import com.thewind.space.main.ui.indexpage.model.RecommendCardType
+import com.thewind.space.main.ui.music.indexpage.model.CardAction
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCardType
 import com.thewind.space.main.ui.music.model.MusicInfo
 import com.thewind.space.main.ui.music.model.SongSrc
 import com.thewind.space.main.ui.music.model.getSingerDisplayName
@@ -28,11 +28,11 @@ interface IndexRecommendServices {
 
 }
 
-fun getIndexRecommendCardList(page: Int): List<RecommendCard> {
+fun getIndexRecommendCardList(page: Int, keyword: String): List<RecommendCard> {
 
     val res = mutableListOf<RecommendCard>()
 
-    searchMusic("热门", 30, page, SongSrc.QQ).forEach {
+    searchMusic(keyword, 30, page, SongSrc.QQ).forEach {
         res.add(RecommendCard().apply {
             cardType = RecommendCardType.MUSIC
             title = it.songName

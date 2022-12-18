@@ -1,9 +1,9 @@
-package com.thewind.space.main.ui.indexpage.recommend.ui.adapter
+package com.thewind.space.main.ui.music.indexpage.recommend.ui.adapter
 
 import com.alibaba.android.arouter.launcher.ARouter
 import com.thewind.space.config.router.AppRouter
-import com.thewind.space.main.ui.indexpage.model.RecommendCard
-import com.thewind.space.main.ui.indexpage.model.RecommendCardType
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCardType
 import com.thewind.space.main.ui.music.model.MusicInfo
 
 /**

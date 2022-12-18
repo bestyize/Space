@@ -8,8 +8,7 @@ package com.thewind.space.main.ui.define
 
 enum class MainPage(val value: Int){
     RECOMMEND_PAGE(0),
-    MUSIC_PAGE(1),
-    VIDEO_FEED_PAGE(2),
-    TALK_PAGE(3),
-    USER_CENTER_PAGE(4);
+    VIDEO_FEED_PAGE(1),
+    TALK_PAGE(2),
+    USER_CENTER_PAGE(3);
 }

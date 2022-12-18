@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    tools:context=".main.ui.indexpage.recommend.ui.IndexRecommendFragment">
+    tools:context=".main.ui.music.indexpage.recommend.ui.MusicRecommendFragment">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_refresh"
         android:layout_width="match_parent"

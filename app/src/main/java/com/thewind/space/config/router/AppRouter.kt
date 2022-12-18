@@ -4,6 +4,7 @@ object AppRouter {
     object PathDefine {
         const val VIDEO_DETAIL_PAGE = "/video/detail"
         const val MUSIC_PLAYER_PAGE = "/music/player"
+        const val MUSIC_SEARCH_PAGE = "/music/search"
     }
 
     object MusicPlayerDefine {

@@ -21,8 +21,7 @@ import com.thewind.space.main.ui.bottomnav.BottomBarViewModel
 import com.thewind.space.main.ui.bottomnav.BottomNavBarView
 import com.thewind.space.main.ui.define.MainPage
 import com.thewind.space.main.ui.music.detailpage.ui.player.floatplayer.FloatPlayerManager
-import com.thewind.space.main.ui.music.searchpage.ui.MusicSearchFragment
-import com.thewind.space.main.ui.indexpage.IndexFragment
+import com.thewind.space.main.ui.music.indexpage.IndexFragment
 import com.thewind.space.main.ui.videofeed.VideoFeedFragment
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 
@@ -34,7 +33,6 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
 
     private val mPageMap: Map<Int, Fragment> = mapOf(
         MainPage.RECOMMEND_PAGE.value to IndexFragment(),
-        MainPage.MUSIC_PAGE.value to MusicSearchFragment(),
         MainPage.VIDEO_FEED_PAGE.value to VideoFeedFragment(),
     )
 
@@ -78,12 +76,6 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
                 }
 
             }
-            MainPage.MUSIC_PAGE.value -> {
-                mPageMap[index]?.let {
-                    bottomNavBarView.setColor(Color.BLACK, Color.WHITE, Color.LTGRAY)
-                    supportFragmentManager.beginTransaction().replace(R.id.frag_container, it).commitNowAllowingStateLoss()
-                }
-            }
             MainPage.VIDEO_FEED_PAGE.value -> {
                 mPageMap[index]?.let {
                     bottomNavBarView.setColor(Color.TRANSPARENT, Color.RED, Color.WHITE)
@@ -92,8 +84,6 @@ class MainActivity : BaseActivity(), BottomNavBarView.BottomNavBarViewSelectList
             }
             MainPage.TALK_PAGE.value -> {
                 ARouter.getInstance().build(AppRouter.PathDefine.VIDEO_DETAIL_PAGE).navigation()
-//                val intent = Intent(this, VideoDetailActivity::class.java)
-//                startActivity(intent)
             }
             MainPage.USER_CENTER_PAGE.value -> {
                 ARouter.getInstance().build(AppRouter.PathDefine.VIDEO_DETAIL_PAGE).navigation()

@@ -1,4 +1,4 @@
-package com.thewind.space.main.ui.indexpage.recommend.ui
+package com.thewind.space.main.ui.music.indexpage.recommend.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,19 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.thewind.space.databinding.FragmentIndexRecommendBinding
-import com.thewind.space.main.ui.indexpage.model.RecommendCard
-import com.thewind.space.main.ui.indexpage.recommend.ui.adapter.RecommendCardAdapter
-import com.thewind.space.main.ui.indexpage.recommend.vm.IndexRecommendFragmentViewModel
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.music.indexpage.recommend.ui.adapter.RecommendCardAdapter
+import com.thewind.space.main.ui.music.indexpage.recommend.vm.IndexRecommendFragmentViewModel
 import com.thewind.spacecore.notify.ToastHelper
 
 /**
  * A simple [Fragment] subclass.
- * Use the [IndexRecommendFragment.newInstance] factory method to
+ * Use the [MusicRecommendFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class IndexRecommendFragment : Fragment() {
+class MusicRecommendFragment(private var tabName: String) : Fragment() {
 
     private lateinit var binding: FragmentIndexRecommendBinding
 
@@ -73,7 +72,7 @@ class IndexRecommendFragment : Fragment() {
         }
         binding.srlRefresh.setOnRefreshListener {
             binding.srlRefresh.isRefreshing = true
-            recommendVM.refresh()
+            recommendVM.refresh(tabName)
         }
         binding.rvRecommendFeed.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             private var lastPos: Int = 0
@@ -81,7 +80,7 @@ class IndexRecommendFragment : Fragment() {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     if (lastPos == cardList.size - 1) {
-                        recommendVM.refresh(true)
+                        recommendVM.refresh(tabName, true)
                     }
                 }
             }
@@ -91,13 +90,13 @@ class IndexRecommendFragment : Fragment() {
                 lastPos = (recyclerView.layoutManager as? LinearLayoutManager)?.findLastCompletelyVisibleItemPosition()?:0
             }
         })
-        recommendVM.refresh()
+        recommendVM.refresh(tabName)
 
     }
 
     companion object {
 
         @JvmStatic
-        fun newInstance() = IndexRecommendFragment()
+        fun newInstance(tabName: String) = MusicRecommendFragment(tabName)
     }
 }

@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
@@ -43,7 +44,7 @@ class CommonSearchBarView @JvmOverloads constructor(
     private var binding: SearchBarLayoutBinding
 
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.search_bar_layout, null, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.search_bar_layout, this, false)
         addView(view)
         binding = SearchBarLayoutBinding.bind(view)
         binding.tvSearch.setOnClickListener {
@@ -52,7 +53,9 @@ class CommonSearchBarView @JvmOverloads constructor(
         binding.ivBack.setOnClickListener {
             searchListener?.onBackClick()
         }
-
+        binding.clSearchTextContainer.setOnClickListener {
+            searchListener?.onSearchBarClick()
+        }
         binding.etInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -75,6 +78,11 @@ class CommonSearchBarView @JvmOverloads constructor(
             }
             true
         }
+        binding.root.setOnClickListener {
+            searchListener?.onSearchBarClick()
+        }
+
+
     }
 
     override fun dispatchDraw(canvas: Canvas?) {
@@ -117,11 +125,20 @@ class CommonSearchBarView @JvmOverloads constructor(
         manager.hideSoftInputFromWindow(windowToken, 0)
     }
 
+    fun abandonInput() {
+        binding.etInput.visibility = View.GONE
+    }
+
+    fun arouseInput() {
+        binding.etInput.requestFocus()
+    }
+
 
 }
 
 
 interface SearchBarViewListener {
+    fun onSearchBarClick()
     fun onSearchClick(text: String)
     fun onInputClick()
     fun onBackClick()

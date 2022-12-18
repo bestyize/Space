@@ -22,5 +22,5 @@ class BottomBarViewModel : ViewModel() {
 }
 
 object BottomBarModel {
-    val tabList = listOf("首页", "音乐", "视频", "论坛", "我的")
+    val tabList = listOf("音乐", "视频", "论坛", "我的")
 }

@@ -1,4 +1,4 @@
-package com.thewind.space.main.ui.indexpage.recommend.ui.adapter
+package com.thewind.space.main.ui.music.indexpage.recommend.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.thewind.space.R
 import com.thewind.space.config.router.AppRouter
 import com.thewind.space.databinding.RecommendCardItemAdapterBinding
-import com.thewind.space.main.ui.indexpage.model.RecommendCard
-import com.thewind.space.main.ui.indexpage.model.RecommendCardType
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCardType
 import com.thewind.spacecore.notify.ToastHelper
 
 /**
@@ -35,7 +35,7 @@ class RecommendCardAdapter(val list: List<RecommendCard>) :
         Glide.with(holder.binding.root.context).load(item.coverUrl)
             .placeholder(R.drawable.recommend_place_holder).into(holder.binding.ivCover)
         holder.binding.root.setOnClickListener {
-           CardActionHandler.doAction(item)
+            CardActionHandler.doAction(item)
         }
     }
 

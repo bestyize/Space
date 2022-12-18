@@ -85,6 +85,10 @@ class MusicSearchFragment : Fragment() {
             }
         }
         binding.csvSearch.searchListener = object : SearchBarViewListener {
+            override fun onSearchBarClick() {
+
+            }
+
             override fun onSearchClick(text: String) {
                 mLastSearchText = text
                 searchVM.search(text)
@@ -102,9 +106,7 @@ class MusicSearchFragment : Fragment() {
 
             }
         }
-        searchVM.updateRecommendMusic()
-
-
+        binding.csvSearch.arouseInput()
     }
 
     override fun onResume() {

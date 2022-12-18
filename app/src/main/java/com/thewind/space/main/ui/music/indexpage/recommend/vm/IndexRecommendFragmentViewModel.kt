@@ -1,10 +1,10 @@
-package com.thewind.space.main.ui.indexpage.recommend.vm
+package com.thewind.space.main.ui.music.indexpage.recommend.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thewind.space.main.ui.indexpage.model.RecommendCard
-import com.thewind.space.main.ui.indexpage.recommend.services.getIndexRecommendCardList
+import com.thewind.space.main.ui.music.indexpage.model.RecommendCard
+import com.thewind.space.main.ui.music.indexpage.recommend.services.getIndexRecommendCardList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,7 +22,7 @@ class IndexRecommendFragmentViewModel: ViewModel() {
 
     private var refreshCount: Int = 0
 
-    fun refresh(loadMore: Boolean = false) {
+    fun refresh(keyword: String, loadMore: Boolean = false) {
         val page = if (loadMore) refreshCount else 0
         if (loadMore) {
             refreshCount++
@@ -31,7 +31,7 @@ class IndexRecommendFragmentViewModel: ViewModel() {
         }
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                getIndexRecommendCardList(page)
+                getIndexRecommendCardList(page, keyword)
             }.let {
                 if (loadMore) recommendFeedsMore.postValue(it) else recommendFeeds.postValue(it)
             }

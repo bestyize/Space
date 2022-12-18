@@ -1,4 +1,4 @@
-package com.thewind.space.main.ui.indexpage.model
+package com.thewind.space.main.ui.music.indexpage.model
 
 import androidx.annotation.Keep
 
