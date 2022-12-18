@@ -87,7 +87,7 @@ class FloatPlayerManager {
                                     }
 
                                     override fun onCloseClick() {
-                                        MusicPlayerManager.getInstance().getPlayer()?.release()
+                                        MusicPlayerManager.getInstance().getPlayer()?.pause()
                                         mFloatPlayerView?.visibility = View.GONE
                                         (mFloatPlayerView?.parent as? ViewGroup)?.removeView(
                                             mFloatPlayerView
