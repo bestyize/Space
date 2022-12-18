@@ -4,11 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.thewind.resmanager.downloader.executor.DownloadManager
+import com.thewind.resmanager.downloader.executor.DownloadTask
 import com.thewind.space.R
 import com.thewind.space.config.router.AppRouter
 import com.thewind.space.databinding.MusicCommonItemLayoutBinding
 import com.thewind.space.main.ui.music.model.MusicInfo
 import com.thewind.space.main.ui.music.model.getSingerDisplayName
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * @author: read

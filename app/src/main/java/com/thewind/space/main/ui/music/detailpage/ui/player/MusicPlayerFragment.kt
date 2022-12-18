@@ -19,12 +19,14 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.thewind.resmanager.config.getPublicRootDir
+import com.thewind.resmanager.downloader.executor.DownloadManager
+import com.thewind.resmanager.downloader.executor.DownloadTask
+import com.thewind.resmanager.downloader.model.DownloadInfo
 import com.thewind.space.R
 import com.thewind.space.databinding.FragmentMusicPlayerBinding
 import com.thewind.space.main.ui.music.detailpage.ui.lyric.LyricView
-import com.thewind.space.main.ui.music.model.MusicInfo
-import com.thewind.space.main.ui.music.model.MusicPlayInfo
-import com.thewind.space.main.ui.music.model.getSingerDisplayName
+import com.thewind.space.main.ui.music.model.*
 import com.thewind.space.main.ui.videofeed.player.ControlPanelView
 import com.thewind.space.main.ui.videofeed.player.ImmersivePlayerOperationListener
 import com.thewind.spacecore.animator.AnimatorUtils
@@ -33,6 +35,7 @@ import com.thewind.spacecore.uiutil.FastBlurUtil
 import com.thewind.spacecore.uiutil.ViewUtils
 import com.thewind.spacecore.uiutil.ViewUtils.dpToPx
 import kotlinx.coroutines.*
+import java.io.File
 
 
 /**
@@ -72,6 +75,12 @@ class MusicPlayerFragment : Fragment(), ImmersivePlayerOperationListener {
             MusicPlayerManager.getInstance().setPlayerData(musicPlayInfo)
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
+                    DownloadManager.getInstance().submit(DownloadTask(DownloadInfo()
+                        .apply {
+                            url = musicPlayInfo.url
+                            filePath = musicInfo?.getSaveFileName()
+
+                        }, null))
                     getPlayer()?.let { player ->
                         mPlayState = MusicPlayState.INIT
                         player.setDataSource(musicPlayInfo.url)
